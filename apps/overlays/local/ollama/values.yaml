@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ollama
+  namespace: flux-system
+spec:
+  values:
+    replicaCount: 1
+    ollama:
+      gpu:
+        enabled: false
+      models:
+        pull:
+          - llama2
+    ingress:
+      enabled: true
+      className: cilium
+      hosts:
+        - host: cluster.yumenomatayume.home
+          paths:
+            - path: /ollama
+              pathType: Prefix
